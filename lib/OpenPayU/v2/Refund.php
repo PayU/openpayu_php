@@ -48,7 +48,7 @@ class OpenPayU_Refund extends OpenPayU
         }
 
         try {
-            $authType = self::getAuth();
+            $authType = static::getAuth();
         } catch (OpenPayU_Exception $e) {
             throw new OpenPayU_Exception($e->getMessage(), $e->getCode());
         }
@@ -57,7 +57,7 @@ class OpenPayU_Refund extends OpenPayU
 
         $data = OpenPayU_Util::buildJsonFromArray($refund);
 
-        $result = self::verifyResponse(OpenPayU_Http::doPost($pathUrl, $data, $authType), 'RefundCreateResponse');
+        $result = static::verifyResponse(OpenPayU_Http::doPost($pathUrl, $data, $authType), 'RefundCreateResponse');
 
         return $result;
     }
@@ -86,7 +86,7 @@ class OpenPayU_Refund extends OpenPayU
             unset($message['status']);
         }
 
-        $result = self::build($data);
+        $result = static::build($data);
 
         if ($httpStatus == 200 || $httpStatus == 201 || $httpStatus == 422 || $httpStatus == 302) {
             return $result;
